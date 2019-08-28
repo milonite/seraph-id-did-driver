@@ -2,12 +2,12 @@ import express = require('express');
 import Resolver from './resolver'
 
 const app: express.Application = express();
-var sidRegExp = RegExp('^(did:sid:.+)$')
+var neoidRegExp = RegExp('^(did:neoid:.+)$')
 
 
 app.get('/1.0/identifiers/:did', async (req, res) => {
     const did: string = req.params.did;
-    if(sidRegExp.test(did)){
+    if(neoidRegExp.test(did)){
         try {
             const ddo = await Resolver.resolve(did);
             res.send(ddo);
@@ -19,7 +19,7 @@ app.get('/1.0/identifiers/:did', async (req, res) => {
     }
 });
 
-app.listen(8090, () => {
-    console.log('SeraphID did resolver listening on port 8090');
+app.listen(8080, () => {
+    console.log('SeraphID did resolver listening on port 8080');
 });
 

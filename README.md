@@ -19,13 +19,12 @@
 # Overview
 
 This is a [Universal Resolver](https://github.com/swisscom-blockchain/universal-resolver) driver for Seraph ID - a self-sovereign identity
-solution on the NEO blockchain platform. This project provides an implementation
-for *did:sid* identifiers.
+solution on the NEO blockchain platform. This project provides an implementation for **did:neoid** identifiers.
 
 # Example DIDs
 
 ```
-did:sid:priv:b4eeeb80d20bfb38b23001d0659ce0c1d96be0aa
+did:neoid:priv:b4eeeb80d20bfb38b23001d0659ce0c1d96be0aa
 ```
 
 # Build and Run
@@ -33,7 +32,7 @@ did:sid:priv:b4eeeb80d20bfb38b23001d0659ce0c1d96be0aa
 ```sh
 make build
 make run
-curl -X GET http://localhost:8080/1.0/identifiers/did:sid:priv:b4eeeb80d20bfb38b23001d0659ce0c1d96be0aa
+curl -X GET http://localhost:8080/1.0/identifiers/did:neoid:priv:b4eeeb80d20bfb38b23001d0659ce0c1d96be0aa
 ```
 
 # References

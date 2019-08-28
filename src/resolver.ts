@@ -1,18 +1,12 @@
 import {SeraphIDIssuerContract, DIDNetwork} from '@sbc/seraph-id-sdk';
 
 /**
- * Helper class to resolve a did given
+ * Helper class to resolve a given did string
  */
 export default class Resolver {
 
     public static async resolve(did: string): Promise<string>{
         var splitDID = did.split(":");
-        if (splitDID[0] != "did"){
-            console.error("did string should start with did")
-        }
-        if (splitDID[1] != "sid"){
-            console.error("invalid did method for seraphid. Should be sid")
-        }
         if (splitDID[3].length == 40){
             // script hash -> on chain resolution
             const scriptHash = splitDID[3];
@@ -30,7 +24,7 @@ export default class Resolver {
                 throw new Error("RPC URL undefined");
             }
         } else {
-           throw new Error("DID does not point to a valid SeraphID smart contract");
+           throw new Error("DID string does not contain a valid smart contract script hash");
         }
     }
 
@@ -41,21 +35,21 @@ export default class Resolver {
 
     private static GenerateDDO(scriptHash: string, network: DIDNetwork, publicKey: string): string {
         const DDO: DIDDocument = new DIDDocument(
-            "did:sid:" + network + ":" + scriptHash,
+            "did:neoid:" + network + ":" + scriptHash,
             undefined,
             [{
-                type: "secp256r1SignatureAuthentication2018",
+                type: "EcdsaSecp256r1Authentication2019",
                 publicKey: [
-                    "did:sid:" + network + ":" + scriptHash + "#keys-1"
+                    "did:neoid:" + network + ":" + scriptHash + "#keys-1"
                 ]
             }],
             [{
-                id: "did:sid:" + network + ":" + scriptHash + "#keys-1",
-                type: "secp256r1VerificationKey2018",
-                controller: "did:sid:" + network + ":" + scriptHash,
+                id: "did:neoid:" + network + ":" + scriptHash + "#keys-1",
+                type: "EcdsaSecp256r1VerificationKey2019",
+                controller: "did:neoid:" + network + ":" + scriptHash,
                 publicKeyHex: publicKey
             }],
-            "https://w3id.org/ldid/v1"
+            "https://w3id.org/did/v0.11"
         );
         const json = JSON.stringify(DDO);
         return json.replace("context","@context");
@@ -73,9 +67,9 @@ class NetworkEnvironment {
     private static defaultPriv = "https://demo.seraphid.io/rpc"; // seraph-id demo private net
 
     public static config: Map<string, string> = new Map([
-        ["main", process.env["uniresolver_driver_did_sid_rpcUrlMain"] || NetworkEnvironment.defaultMain],
-        ["test", process.env["uniresolver_driver_did_sid_rpcUrlTest"] || NetworkEnvironment.defaultTest],
-        ["priv", process.env["uniresolver_driver_did_sid_rpcUrlPriv"] || NetworkEnvironment.defaultPriv]
+        ["main", process.env["uniresolver_driver_did_neoid_rpcUrlMain"] || NetworkEnvironment.defaultMain],
+        ["test", process.env["uniresolver_driver_did_neoid_rpcUrlTest"] || NetworkEnvironment.defaultTest],
+        ["priv", process.env["uniresolver_driver_did_neoid_rpcUrlPriv"] || NetworkEnvironment.defaultPriv]
     ]);
 
     public static StringToDIDNetwork(network: string): DIDNetwork{
