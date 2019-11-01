@@ -42,6 +42,8 @@ curl -X GET http://localhost:8080/1.0/identifiers/did:neoid:priv:b4eeeb80d20bfb3
 - Seraph ID smart contract templates and examples on [GitHub](https://github.com/swisscom-blockchain/seraph-id-smart-contracts)
 - Seraph ID SDK on
   [GitHub](https://github.com/swisscom-blockchain/seraph-id-sdk)
+- Seraph ID chrome extension on [GitHub](https://github.com/swisscom-blockchain/seraph-id-chrome-extension)
+
 
 
 # License
